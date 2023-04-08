@@ -1,0 +1,2 @@
+[backend]
+backendServer ansible_host=13.235.242.18 ansible_connection=ssh ansible_user=ubuntu ansible_sudo_pass=1234
