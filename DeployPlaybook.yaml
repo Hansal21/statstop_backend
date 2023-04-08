@@ -11,7 +11,5 @@
     - name: Git checkout
       register: source_code_clones
       ansible.builtin.git:
-        repo: 'https://github.com/statstop/statstop_backend.git'
+        repo: 'https://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@github.com/statstop/statstop_backend.git'
         dest: /home/ubuntu/ansible
-    - name: maven clean package
-      command: mvn -f /home/ubuntu/ansible/pom.xml clean package
