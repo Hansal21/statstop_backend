@@ -1,0 +1,17 @@
+---
+- name: Playbook
+  hosts: backend
+  become: yes
+  become_user: root
+  tasks:
+    - name: Remove directory
+      file:
+        path: /home/ubuntu/ansible
+        state: absent
+    - name: Git checkout
+      register: source_code_clones
+      ansible.builtin.git:
+        repo: 'https://github.com/statstop/statstop_backend.git'
+        dest: /home/ubuntu/ansible
+    - name: maven clean package
+      command: mvn -f /home/ubuntu/ansible/pom.xml clean package
