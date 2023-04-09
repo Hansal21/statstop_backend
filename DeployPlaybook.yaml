@@ -6,10 +6,12 @@
   tasks:
     - name: Remove directory
       file:
-        path: /home/ubuntu/ansible
+        path: /home/ubuntu/statstop_backend
         state: absent
     - name: Git checkout
       register: source_code_clones
       ansible.builtin.git:
         repo: 'https://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@github.com/statstop/statstop_backend.git'
-        dest: /home/ubuntu/ansible
+        dest: /home/ubuntu
+    - name: Create JAR file
+      command: chdir=/home/ubuntu/statstop_backend mvn clean install
