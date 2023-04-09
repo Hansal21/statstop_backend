@@ -14,4 +14,4 @@
         repo: 'https://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@github.com/statstop/statstop_backend.git'
         dest: /home/ubuntu/StatStop
     - name: Create JAR file
-      command: chdir=/home/ubuntu/statstop_backend mvn clean install
+      command: chdir=/home/ubuntu/StatStop/statstop_backend mvn clean install
