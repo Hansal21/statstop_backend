@@ -6,7 +6,7 @@
   tasks:
     - name: Remove directory
       file:
-        path: /home/ubuntu/StatStop/statstop_backend
+        path: /home/ubuntu/StatStop
         state: absent
     - name: Git checkout
       register: source_code_clones
@@ -14,4 +14,4 @@
         repo: 'https://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@github.com/statstop/statstop_backend.git'
         dest: /home/ubuntu/StatStop
     - name: Create JAR file
-      command: chdir=/home/ubuntu/StatStop/statstop_backend mvn clean install
+      command: chdir=/home/ubuntu/StatStop mvn clean install
