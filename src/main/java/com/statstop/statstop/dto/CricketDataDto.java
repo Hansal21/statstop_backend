@@ -1,29 +1,27 @@
-package com.statstop.statstop.entity;
+package com.statstop.statstop.dto;
 
-import jakarta.persistence.*;
+import com.statstop.statstop.entity.Game;
+import com.statstop.statstop.entity.Player;
+import com.statstop.statstop.entity.Team;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Builder
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class CricketData {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+@NoArgsConstructor
+@Builder
+public class CricketDataDto {
     private Integer id;
     private Integer ballNo;
     private Integer overNo;
-    private Integer gameId;
-    private Integer teamId;
-    private Integer bowler;
-    private Integer batter1;
+    private Game gameId;
+    private Team teamId;
+    private Player bowler;
+    private Player batter1;
     private Integer batter1Run;
-    private Integer batter2;
+    private Player batter2;
     private Integer batter2Run;
     private Integer wicket;
     private Integer runScoredThisBall;
