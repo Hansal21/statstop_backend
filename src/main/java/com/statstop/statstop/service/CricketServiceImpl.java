@@ -118,4 +118,9 @@ public class CricketServiceImpl implements CricketService{
         return gameRepository.updateGame(game.getTeam1Score(),game.getTeam1Wickets(),game.getTeam1ball(),game.getTeam1overs(),
                 game.getTeam2Score(),game.getTeam2Wickets(),game.getTeam2ball(),game.getTeam2overs(), updateDto.getGameId());
     }
+
+    @Override
+    public List<Integer> getAllGames() {
+        return gameRepository.findAllByOrderByGameIdDesc();
+    }
 }

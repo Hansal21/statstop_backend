@@ -26,4 +26,6 @@ public interface CricketService {
     void addScoreCard(Integer gameId);
 
     Integer update(UpdateDto updateDto);
+
+    List<Integer> getAllGames();
 }

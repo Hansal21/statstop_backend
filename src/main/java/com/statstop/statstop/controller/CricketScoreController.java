@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -76,35 +77,40 @@ public class CricketScoreController {
     public CricketData addCricketData(@RequestBody CricketData cricketData){
         return cricketService.addCricketData(cricketData);
     }
-    @GetMapping("get-game")
-    public GameDataDto getGame(@RequestParam("gameId") Integer gameId){
-        Game game=cricketService.getGameById(gameId);
-        Team team1=cricketService.getTeamById(game.getTeam1Id());
-        Team team2=cricketService.getTeamById(game.getTeam2Id());
-        Team winner=cricketService.getTeamById(game.getWinnerTeamId());
-        team1.setPlayers(null);
-        team2.setPlayers(null);
-        if(winner!=null)
-        winner.setPlayers(null);
-        GameDataDto gameDataDto=GameDataDto.builder()
-                .gameId(game.getGameId())
-                .team1(team1)
-                .team2(team2)
-                .team2Score(game.getTeam2Score())
-                .team1Score(game.getTeam1Score())
-                .remarks(game.getRemarks())
-                .winnerTeam(winner)
-                .team1overs(game.getTeam1overs())
-                .team1ball(game.getTeam1ball())
-                .team2overs(game.getTeam2overs())
-                .team2ball(game.getTeam2ball())
-                .totalOvers(game.getTotalOvers())
-                .firstInnings(game.getFirstInnings())
-                .date(game.getDate())
-                .team1Wickets(game.getTeam1Wickets())
-                .team2Wickets(game.getTeam2Wickets())
-                .build();
-        return gameDataDto;
+    @GetMapping("get-games")
+    public List<GameDataDto> getGame(){
+        List<GameDataDto> gameDataDtos=new ArrayList<>();
+        List<Integer> gameIds=cricketService.getAllGames();
+        for(Integer gameId:gameIds) {
+            Game game = cricketService.getGameById(gameId);
+            Team team1 = cricketService.getTeamById(game.getTeam1Id());
+            Team team2 = cricketService.getTeamById(game.getTeam2Id());
+            Team winner = cricketService.getTeamById(game.getWinnerTeamId());
+            team1.setPlayers(null);
+            team2.setPlayers(null);
+            if (winner != null)
+                winner.setPlayers(null);
+            GameDataDto gameDataDto = GameDataDto.builder()
+                    .gameId(game.getGameId())
+                    .team1(team1)
+                    .team2(team2)
+                    .team2Score(game.getTeam2Score())
+                    .team1Score(game.getTeam1Score())
+                    .remarks(game.getRemarks())
+                    .winnerTeam(winner)
+                    .team1overs(game.getTeam1overs())
+                    .team1ball(game.getTeam1ball())
+                    .team2overs(game.getTeam2overs())
+                    .team2ball(game.getTeam2ball())
+                    .totalOvers(game.getTotalOvers())
+                    .firstInnings(game.getFirstInnings())
+                    .date(game.getDate())
+                    .team1Wickets(game.getTeam1Wickets())
+                    .team2Wickets(game.getTeam2Wickets())
+                    .build();
+            gameDataDtos.add(gameDataDto);
+        }
+        return gameDataDtos;
     }
 
 }
