@@ -23,23 +23,26 @@
       docker_container:
         name: backend_container
         state: absent
+    - name: Stop and remove existing mysql container
+      docker_container:
+        name: mysql_container
+        state: absent
 
-    - name: create and run container
+    - name: create and run MYSQL container
       docker_container:
         name: mysql_container
         image: mysql
+        env: MYSQL_ROOT_PASSWORD=IAMROOT
+        volumes:
+          - /home/hansal/mysql:/var/lib/mysql
         ports:
-          - "3036:3036"
+          - "3307:3306"
         detach: true
 
     - name: create and run container
       docker_container:
         name: backend_container
-        image: statstop/backend_container
-        environment:
-          MYSQL_ROOT_PASSWORD: "iamroot"
-        volumes:
-            - /home/hansal/statstop:/var/lib/mysql
+        image: statstop/statstop_backend
         ports:
           - "8085:8085"
         detach: true
