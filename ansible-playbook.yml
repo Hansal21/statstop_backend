@@ -7,6 +7,8 @@
       copy:
         src: ./docker-compose.yml
         dest: ./
+    - name:  docker-compose down
+      command: docker-compose down
     - name: run docker-compose file
       command: docker-compose up -d
 #---
