@@ -1,0 +1,26 @@
+services:
+  db:
+    image: mysql
+    healthcheck:
+      test: ["CMD", "ls"]
+    ports:
+      - "3308:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=password
+    volumes:
+      - /home/hansal/Documents/mysql:/var/lib/mysql
+  backend:
+    image: statstop/statstop_backend
+    ports:
+      - "8085:8085"
+    environment:
+      - IP=172.16.133.184 #enter your ipadderss here
+      - PORT=3308
+    depends_on:
+      db:
+        condition: service_healthy
+  frontend:
+    image: statstop/statstop_frontend
+    ports:
+      - "3000:3000"
+
