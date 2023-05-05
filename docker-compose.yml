@@ -14,7 +14,7 @@ services:
     ports:
       - "8085:8085"
     environment:
-      - IP=172.16.133.184 #enter your ipadderss here
+      - IP=172.16.133.184
       - PORT=3308
     depends_on:
       db:

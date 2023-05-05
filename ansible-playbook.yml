@@ -1,48 +1,59 @@
+
 ---
-- name: Pull docker image from dockerhub
+- name: copy docker-compose file
   hosts: all
   tasks:
-    - name: Pull docker image
-      docker_image:
-        name: statstop/statstop_backend
-        source: pull
-    - name: Pull mysql image
-      docker_image:
-        name: mysql
-        source: pull
-
-    # - name: remove if a container already exists
-    #   shell: |
-    #     if  [[ "$(docker ps -a | grep frontend_container | wc -l)" > "0" ]]; then
-    #       echo $(docker rm -f frontend_container)
-    #     fi
-
-    # - name: create and run container
-    #   shell: docker run -d -p 3000:3000 --name frontend_container statstop/statstop_frontend
-    - name: Stop and remove existing container
-      docker_container:
-        name: backend_container
-        state: absent
-    - name: Stop and remove existing mysql container
-      docker_container:
-        name: mysql_container
-        state: absent
-
-    - name: create and run MYSQL container
-      docker_container:
-        name: mysql_container
-        image: mysql
-        env: MYSQL_ROOT_PASSWORD=IAMROOT
-        volumes:
-          - /home/hansal/mysql:/var/lib/mysql
-        ports:
-          - "3307:3306"
-        detach: true
-
-    - name: create and run container
-      docker_container:
-        name: backend_container
-        image: statstop/statstop_backend
-        ports:
-          - "8085:8085"
-        detach: true
+    - name: copy docker-compose file
+      copy:
+        src: ./docker-compose.yml
+        dest: ./
+    - name: run docker-compose file
+      command: docker-compose up -d
+#---
+#- name: Pull docker image from dockerhub
+#  hosts: all
+#  tasks:
+#    - name: Pull docker image
+#      docker_image:
+#        name: statstop/statstop_backend
+#        source: pull
+#    - name: Pull mysql image
+#      docker_image:
+#        name: mysql
+#        source: pull
+#
+#    # - name: remove if a container already exists
+#    #   shell: |
+#    #     if  [[ "$(docker ps -a | grep frontend_container | wc -l)" > "0" ]]; then
+#    #       echo $(docker rm -f frontend_container)
+#    #     fi
+#
+#    # - name: create and run container
+#    #   shell: docker run -d -p 3000:3000 --name frontend_container statstop/statstop_frontend
+#    - name: Stop and remove existing container
+#      docker_container:
+#        name: backend_container
+#        state: absent
+#    - name: Stop and remove existing mysql container
+#      docker_container:
+#        name: mysql_container
+#        state: absent
+#
+#    - name: create and run MYSQL container
+#      docker_container:
+#        name: mysql_container
+#        image: mysql
+#        env: MYSQL_ROOT_PASSWORD=IAMROOT
+#        volumes:
+#          - /home/hansal/mysql:/var/lib/mysql
+#        ports:
+#          - "3307:3306"
+#        detach: true
+#
+#    - name: create and run container
+#      docker_container:
+#        name: backend_container
+#        image: statstop/statstop_backend
+#        ports:
+#          - "8085:8085"
+#        detach: true
