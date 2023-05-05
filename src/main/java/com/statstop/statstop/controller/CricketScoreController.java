@@ -2,22 +2,22 @@ package com.statstop.statstop.controller;
 
 import com.statstop.statstop.dto.CricketDataDto;
 import com.statstop.statstop.dto.GameDataDto;
+import com.statstop.statstop.dto.LoginDto;
 import com.statstop.statstop.dto.UpdateDto;
-import com.statstop.statstop.entity.CricketData;
-import com.statstop.statstop.entity.Game;
-import com.statstop.statstop.entity.Player;
-import com.statstop.statstop.entity.Team;
+import com.statstop.statstop.entity.*;
 import com.statstop.statstop.repository.CricketRepository;
+import com.statstop.statstop.repository.UserRepository;
 import com.statstop.statstop.service.CricketService;
+import com.statstop.statstop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cricket-score")
 @RequiredArgsConstructor
 public class CricketScoreController {
     @Autowired
@@ -66,6 +66,7 @@ public class CricketScoreController {
 
     @PostMapping("add-game")
     public Game addgame(@RequestBody Game game){
+        System.out.println(game);
         return cricketService.addGame(game);
     }
 
@@ -107,10 +108,16 @@ public class CricketScoreController {
                     .date(game.getDate())
                     .team1Wickets(game.getTeam1Wickets())
                     .team2Wickets(game.getTeam2Wickets())
+                    .gameLevel(game.getGameLevel())
                     .build();
             gameDataDtos.add(gameDataDto);
         }
         return gameDataDtos;
     }
 
+    private final UserService userService;
+    @PostMapping("login")
+    public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){
+        return userService.login(loginDto);
+    }
 }
