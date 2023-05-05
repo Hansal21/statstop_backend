@@ -4,6 +4,8 @@ import com.statstop.statstop.dto.UpdateDto;
 import com.statstop.statstop.entity.*;
 import com.statstop.statstop.repository.*;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -12,6 +14,8 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class CricketServiceImpl implements CricketService{
+    private static final Logger logger= LogManager.getLogger(CricketServiceImpl.class);
+
     private final TeamRepository teamRepository;
     private final PlayerRepository playerRepository;
     private final GameRepository gameRepository;
@@ -46,6 +50,7 @@ public class CricketServiceImpl implements CricketService{
         game.setTeam1ball(0);
         game.setTeam2ball(0);
         game.setFirstInnings(1);
+        logger.info("Added game");
         return gameRepository.save(game);
     }
 
