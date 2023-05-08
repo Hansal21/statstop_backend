@@ -17,7 +17,7 @@ public class InitializeDB {
             admin.setSecondName("Dhadnha");
             admin.setEmail("hansal@gmail.com");
             admin.setPassword("hansal");
-            if(userRepository.findByEmail(admin.getEmail())!=null)
+            if(userRepository.findByEmail(admin.getEmail())==null)
                 userRepository.save(admin);
         };
     }
