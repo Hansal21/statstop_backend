@@ -14,4 +14,5 @@ public class UpdateDto {
     private Integer runScored;
     private Integer wicket;
     private Integer firstInnings;
+    private Integer team;
 }

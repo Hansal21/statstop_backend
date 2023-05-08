@@ -1,26 +1,43 @@
+version: '3.9'
+networks:
+  stat-stop:
+volumes:
+  database-volume:
 services:
-  db:
-    image: mysql
+  database:
+    image: mysql:latest
     healthcheck:
       test: ["CMD", "ls"]
-    ports:
-      - "3308:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=password
+      MYSQL_ROOT_PASSWORD: root@123
+      MYSQL_DATABASE: statstopDB
+      MYSQL_USER: statstop
+      MYSQL_PASSWORD: statstop@123
     volumes:
-      - /home/hansal/Documents/mysql:/var/lib/mysql
+      - database-volume:/var/lib/mysql
+    networks:
+      - stat-stop
+
   backend:
-    image: statstop/statstop_backend
+    image: statstop/statstop_backend:latest
+    environment:
+      DB_URL: jdbc:mysql://database:3306/StatStopDB?createDatabaseIfNotExist=true
+      DB_USERNAME: root
+      DB_PASSWORD: root@123
+    networks:
+      - stat-stop
     ports:
       - "8085:8085"
-    environment:
-      - IP=172.16.133.184
-      - PORT=3308
     depends_on:
-      db:
+      database:
         condition: service_healthy
   frontend:
-    image: statstop/statstop_frontend
+    image: statstop/statstop_frontend:latest
+    networks:
+      - stat-stop
     ports:
-      - "3000:3000"
+      - "3005:3000"
+    depends_on:
+      - database
+
 
