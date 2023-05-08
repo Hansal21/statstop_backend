@@ -11,6 +11,7 @@ import com.statstop.statstop.service.CricketService;
 import com.statstop.statstop.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping("cricket")
 @RequiredArgsConstructor
 public class CricketScoreController {
     @Autowired
@@ -56,6 +58,7 @@ public class CricketScoreController {
 
     @PostMapping("add-team")
     public Team addTeam(@RequestBody Team team){
+        System.out.println(team);
         return cricketService.addTeam(team);
     }
 
@@ -119,5 +122,10 @@ public class CricketScoreController {
     @PostMapping("login")
     public ResponseEntity<Object> login(@RequestBody LoginDto loginDto){
         return userService.login(loginDto);
+    }
+    @GetMapping("get-teams")
+    public ResponseEntity<Object> getTeams(){
+        System.out.println("In get teams");
+        return new ResponseEntity<>(cricketService.getTeams(), HttpStatus.OK);
     }
 }

@@ -27,11 +27,11 @@ public class CricketServiceImpl implements CricketService{
     @Override
     public Team addTeam(Team team) {
         Team team1=teamRepository.save(team);
-        List<Player> players=team.getPlayers();
-        for(Player p:players){
-            p.setTeam(team1);
-        }
-        addPlayer(players);
+//        List<Player> players=team.getPlayers();
+//        for(Player p:players){
+//            p.setTeam(team1);
+//        }
+//        addPlayer(players);
         return team1;
     }
     @Override
@@ -108,7 +108,7 @@ public class CricketServiceImpl implements CricketService{
     @Override
     public Integer update(UpdateDto updateDto) {
         Game game=gameRepository.findByGameId(updateDto.getGameId());
-        if(updateDto.getFirstInnings()==1){
+        if(updateDto.getTeam()==1){
          game.setTeam1Score(game.getTeam1Score()+updateDto.getRunScored());
          game.setTeam1Wickets(game.getTeam1Wickets()+updateDto.getWicket());
          game.setTeam1ball((game.getTeam1ball()==6?1: game.getTeam1ball()+1));
@@ -127,5 +127,10 @@ public class CricketServiceImpl implements CricketService{
     @Override
     public List<Integer> getAllGames() {
         return gameRepository.findAllByOrderByGameIdDesc();
+    }
+
+    @Override
+    public List<Team> getTeams() {
+        return teamRepository.findAll();
     }
 }

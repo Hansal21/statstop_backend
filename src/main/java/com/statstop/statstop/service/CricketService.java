@@ -5,6 +5,7 @@ import com.statstop.statstop.entity.CricketData;
 import com.statstop.statstop.entity.Game;
 import com.statstop.statstop.entity.Player;
 import com.statstop.statstop.entity.Team;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -28,4 +29,6 @@ public interface CricketService {
     Integer update(UpdateDto updateDto);
 
     List<Integer> getAllGames();
+
+    List<Team> getTeams();
 }
