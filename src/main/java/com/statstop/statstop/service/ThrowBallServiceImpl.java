@@ -8,12 +8,14 @@ import com.statstop.statstop.entity.ThrowBallTeam;
 import com.statstop.statstop.repository.ThrowBallGameRepository;
 import com.statstop.statstop.repository.ThrowBallTeamRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class ThrowBallServiceImpl implements ThrowBallService{
     private final ThrowBallTeamRepository throwBallTeamRepository;
@@ -21,13 +23,18 @@ public class ThrowBallServiceImpl implements ThrowBallService{
 
     @Override
     public ThrowBallTeam addTeam(ThrowBallTeam team) {
+        log.info("throwball team "+team.getTeamName()+" added");
+
         return throwBallTeamRepository.save(team);
+
     }
 
     @Override
     public ThrowBallGame addGame(ThrowBallGame game) {
         game.setTeam1Goals(0);
         game.setTeam2Goals(0);
+        log.info("throwball game added");
+
         return throwBallGameRepository.save(game);
     }
 
@@ -39,7 +46,11 @@ public class ThrowBallServiceImpl implements ThrowBallService{
         }
         else{
             game.setTeam2Goals(game.getTeam2Goals()+1);
+
         }
+        log.info("throwball game "+game.getGameId()+" updated");
+
+
         return throwBallGameRepository.updateGame(game.getTeam1Goals(),game.getTeam2Goals(),game.getWinnerTeamId(),gameId);
     }
 
