@@ -3,6 +3,7 @@ networks:
   stat-stop:
 volumes:
   database-volume:
+  logs:
 services:
   database:
     image: mysql:latest
@@ -24,6 +25,8 @@ services:
       DB_URL: jdbc:mysql://database:3306/StatStopDB?createDatabaseIfNotExist=true
       DB_USERNAME: root
       DB_PASSWORD: root@123
+    volumes:
+      - logs:/logs
     networks:
       - stat-stop
     ports:
