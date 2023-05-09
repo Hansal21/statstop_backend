@@ -19,9 +19,18 @@ public class UserServiceImpl implements UserService{
     @Override
     public ResponseEntity<Object> login(LoginDto loginDto) {
         User user=userRepository.findByEmail(loginDto.getEmail());
-        if(user==null) return new ResponseEntity<>("userNotFound",HttpStatus.UNAUTHORIZED);
-        if(user.getPassword()!=loginDto.getPassword())
+        if(user==null) {
+            logger.error("User not found");
+
+            return new ResponseEntity<>("userNotFound",HttpStatus.UNAUTHORIZED);
+
+        }
+        if(user.getPassword().equals(loginDto.getPassword())) {
+            logger.info("admin logined");
             return new ResponseEntity<>(user, HttpStatus.OK);
+        }
+        logger.error("login failed");
+
         return new ResponseEntity<>("error",HttpStatus.UNAUTHORIZED);
     }
 }

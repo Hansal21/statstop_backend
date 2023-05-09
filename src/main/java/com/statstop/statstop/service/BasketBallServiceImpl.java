@@ -8,11 +8,12 @@ import com.statstop.statstop.entity.BasketBallTeam;
 import com.statstop.statstop.repository.BasketBallGameRepository;
 import com.statstop.statstop.repository.BasketBallTeamRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BasketBallServiceImpl implements BasketBallService{
@@ -21,6 +22,7 @@ public class BasketBallServiceImpl implements BasketBallService{
 
     @Override
     public BasketBallTeam addTeam(BasketBallTeam team) {
+        log.info("basketball team "+team.getTeamName()+" added");
         return basketBallTeamRepository.save(team);
     }
 
@@ -28,6 +30,8 @@ public class BasketBallServiceImpl implements BasketBallService{
     public BasketBallGame addGame(BasketBallGame game) {
         game.setTeam1Goals(0);
         game.setTeam2Goals(0);
+        log.info("basketball game added");
+
         return basketBallGameRepository.save(game);
     }
 
@@ -40,6 +44,7 @@ public class BasketBallServiceImpl implements BasketBallService{
         else{
             game.setTeam2Goals(game.getTeam2Goals()+points);
         }
+        log.info("basketball game score "+game.getGameId()+" updated");
         return basketBallGameRepository.updateGame(game.getTeam1Goals(),game.getTeam2Goals(),game.getWinnerTeamId(),gameId);
     }
 

@@ -4,6 +4,7 @@ import com.statstop.statstop.dto.UpdateDto;
 import com.statstop.statstop.entity.*;
 import com.statstop.statstop.repository.*;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Slf4j
+
 @RequiredArgsConstructor
 public class CricketServiceImpl implements CricketService{
     private static final Logger logger= LogManager.getLogger(CricketServiceImpl.class);
@@ -26,12 +29,14 @@ public class CricketServiceImpl implements CricketService{
 
     @Override
     public Team addTeam(Team team) {
+
         Team team1=teamRepository.save(team);
 //        List<Player> players=team.getPlayers();
 //        for(Player p:players){
 //            p.setTeam(team1);
 //        }
 //        addPlayer(players);
+        log.info("cricket team "+team.getTeamName()+" added");
         return team1;
     }
     @Override
@@ -50,8 +55,9 @@ public class CricketServiceImpl implements CricketService{
         game.setTeam1ball(0);
         game.setTeam2ball(0);
         game.setFirstInnings(1);
-        logger.info("Added game");
+        log.info("cricket game  added");
         return gameRepository.save(game);
+
     }
 
     @Override
@@ -120,6 +126,8 @@ public class CricketServiceImpl implements CricketService{
             game.setTeam2ball((game.getTeam2ball()==6?1: game.getTeam2ball()+1));
             game.setTeam2overs(game.getTeam2ball()==1? game.getTeam2overs() +1: game.getTeam2overs());
         }
+        log.info("cricket game "+game.getGameId()+" updated");
+
         return gameRepository.updateGame(game.getTeam1Score(),game.getTeam1Wickets(),game.getTeam1ball(),game.getTeam1overs(),
                 game.getTeam2Score(),game.getTeam2Wickets(),game.getTeam2ball(),game.getTeam2overs(), updateDto.getGameId());
     }
