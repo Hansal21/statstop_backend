@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public ResponseEntity<Object> login(LoginDto loginDto) {
-        User user=userRepository.findByEmail(loginDto.getEmail());
+        User user=userRepository.findByEmail(loginDto.getEmail()).get();
         if(user==null) {
             logger.error("User not found");
 
@@ -32,5 +32,10 @@ public class UserServiceImpl implements UserService{
         logger.error("login failed");
 
         return new ResponseEntity<>("error",HttpStatus.UNAUTHORIZED);
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email).get();
     }
 }

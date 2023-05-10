@@ -7,4 +7,6 @@ import org.springframework.http.ResponseEntity;
 public interface UserService {
 
     ResponseEntity<Object> login(LoginDto loginDto);
+
+    User findUserByEmail(String email);
 }
